@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo de Cálculo com Bootstrap</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkq9淀qV7Et+yX6yXq3y0pwtKBf5y453B8bQvZ3BCs3p+QyzQ1pCq" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <h1>Cálculo de lote</h1>
+    <form>
+      <div class="form-group input-group">
+        <span class="input-group-text">$</span>
+        <input type="number" class="form-control" id="valor1" name="valor1" min="0" placeholder="Valor em conta">
+      </div>
+
+      <div class="form-group">
+        <label for="ativo">Ativo:</label>
+        <select class="form-control" id="ativo" name="ativo">
+          <option value="Moedas">Moedas</option>
+          <option value="INDEX">US100/US30/GER40</option>
+          <option value="US500">US500</option>
+          <option value="Gold">GOLD</option>
+          <option value="BTC">BTC</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="calcular()">Calcular</button>
+    </form>
+    <br>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const valor1 = document.getElementById('valor1').value;
+      const ativo = document.getElementById('ativo').value;
+
+      const valorBase = 10000;
+      const loteMoedasBase = 0.2;
+      const loteIndexBase = 1;
+      const loteUS500Base = 5;
+      const loteGoldBase = 0.10;
+      const loteBTCBase = 0.05;
+
+      let resultado;
+
+      switch (ativo) {
+        case 'Moedas':
+          resultado = ((valor1 / valorBase) * loteMoedasBase).toFixed(2);
+          break;
+        case 'INDEX':
+          resultado = ((valor1 / valorBase) * loteIndexBase).toFixed(2);
+          break;
+        case 'US500':
+          resultado = ((valor1 / valorBase) * loteUS500Base).toFixed(2);
+          break;
+        case 'Gold':
+          resultado = ((valor1 / valorBase) * loteGoldBase).toFixed(2);
+          break;
+        case 'BTC':
+            if (valor1 < 2000){
+                resultado = 'Indicado operar BTC se tiver valor acima de $ 2.000,00 em conta';
+            }else{
+                resultado = ((valor1 / valorBase) * loteBTCBase).toFixed(2);
+            }
+          break;
+      }
+
+      document.getElementById('resultado').innerHTML = `Lote: ${resultado}`;
+    }
+  </script>
+</body>
+</html>
